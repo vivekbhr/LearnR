@@ -4,8 +4,8 @@ Collecting learning resources in R
 
 ## Interesting talks from UseR2016
 
-* [Tal Galli. Heatmap practices](https://channel9.msdn.com/Events/useR-international-R-User-conference/useR2016/Heatmaps-in-R-Overview-and-best-practices) 
-* [FlashR, efficient/parallel R functions](https://channel9.msdn.com/Events/useR-international-R-User-conference/useR2016/FlashR-Enable-Parallel-Scalable-Data-Analysis-in-R)
+* Tal Galli : [Heatmap, best practices](https://channel9.msdn.com/Events/useR-international-R-User-conference/useR2016/Heatmaps-in-R-Overview-and-best-practices) 
+* Da Zheng : [FlashR, efficient/parallel R functions](https://channel9.msdn.com/Events/useR-international-R-User-conference/useR2016/FlashR-Enable-Parallel-Scalable-Data-Analysis-in-R)
 * Gabor Csardi : [Tools for robust R package](https://channel9.msdn.com/Events/useR-international-R-User-conference/useR2016/Tools-for-Robust-R-Packages)
 * Ramnath Vaidyanathan : [html widgets](https://channel9.msdn.com/Events/useR-international-R-User-conference/useR2016/htmlwidgets-Power-of-JavaScript-in-R)
 * Jan Vitek : [what can R learn from Julia](https://channel9.msdn.com/Events/useR-international-R-User-conference/useR2016/What-can-R-learn-from-Julia)
