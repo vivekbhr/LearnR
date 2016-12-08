@@ -1,0 +1,334 @@
+---
+title: "EuroBioC2016"
+author: "@vivekbhr"
+output:
+ html_document:
+  theme: cerulean
+  toc: yes
+---
+
+# Day 1
+
+## Martin morgan
+
+### Bioc Devel Errors (Examples)
+
++ Reimplementing Bed parser (bioc uses 1 based format)
++ Not using GRanges
++ Not carrying the metadata when storing data as matrices.
++ Not indenting properly
++ Not writing modular code (code should fit in your head
+
+
+### New devels
+
++ New package subs should be as github issues. public review encouraged, new reviewers welcome
++ Experiment and annotation hubs
+      + these are data repos that contains experiment/annotation
+      + ExpHub = annotationHub + Data : Downloads data (not installed with package)
+
++ HDF5Array
+      + save data in hdf5 format
+      + once you ref the object you can do operations instantly (the real operations are delayed)
+      + You can also make a Summareized Exp object with these references (acts like a matrix)
+      + Many operations work on just a "corner" of the matrix, that's why are fast.
+
++ library(Organism.dplyr)
+      + dplyr functions on org.db packages.
+      
+```{r test, eval = FALSE} 
+      src_ucsc("Homo sapiens") %>% tbl(id) %>% 
+      filter(symbol="brca1") %>% select(organism) #(gives another tibble)
+```
+
+
+### Programming best practices
+
++ Reuse and interoperatibility (use S4, don't reinvent)
++ Docs : roxygen
++ Test : RUnit or testthat
++ Correct, efficient, robust , vectorized code
+
+
+### Correct code
+
++ copy and append code: scales quadratically (never use)
++ Allocate and append (better)
++ Robust : instead of vapply(1:n) use seq_len(n) 
++ Correct : check with identical(x,y)
+      
+### Data representation
+
++ Classic (stats way) --> tidy --> bioc (SummerizedExp)
+
+
+## A. Oleys : BiocStyle 2.0
++ New style for vingettes
++ Author names and affiliations, automatic dates, and footnotes on the sidebar
++ Floating TOC, figure captions automatically numbered, three default figure sizes available.
+       
+## Jitao David Zhang (Roche)
+
++ RiBIOS : collection of package
++ ribiosCGI : allows R backend for any preocess.
++ BioQC : Efficient implementation of Wilcox Test (gene set against background).
++ BioQC use don Tissue specific GTEx project finds contaminations.
++ Vince asks : 
+
+## Mike Smith (workflows in bioconductor)
+
++ Can publish in F1000 research.
++ Do it in Rmd.
++ Create package for each workflow.
+
+### BiocWorkflowTools package
+
++ Integrated into Rstudio (new --> F1000 template)
++ Code integration + maths + others. 
++ Retains latex source file, enters f1000 logo.
++ uploadToOverleaf() function submits to overleaf.com for F1000 research.
++ Overleaf project works as Git repo (push and pull)
++ Send to bioc and F1000 at the same time.
+
+## Wolfgang (IDT)
+
++ Independent testing optimizes the cutoff of mean value to filter the expression before BH correction, optimized to get max DE genes.
++ Weighted BH method can be used instead. But weights have to be known. How to find the weights?
+
+### IHW
+
++ Stratify hypothesis into bins and calculate weights.
++ but in case where all hypothesis are wrong, you can overfit.
++ Reduce overfitting by regularization.
++ more DE genes in RNaseq, but huge advantages in other data, like hQTL (histone QTL)
+
+## Frederico Marini
+
++ pcaExplorer : a shiny/R package for functional annotation of PCs
++ PC by PC, or gene-wise exploration
++ Has text editor (wraps up the work and gives you reproducible code)
+
+
+## Phil Cheng: TCGA browser package
+
++ Shiny app : Subset %>% analysis %>% plotting of TCGA data
++ Select cancer --> loads data --> plots expression , survival curve , mutation chisq test
++ Search for a gene (auto matching)
+
+## Nuno Agostinho: shiny app for TCGA alt splicing
+
++ PSI counts for alt splicing
++ Shiny app
++ Downloads data using firebrowse web API
++ PCA individual, PCA loading
++ A shiny brush is available to zoom into one location and get other data.
+
+
+## Rexposome
+
++ Vince says **MultiAssayExperiment** object already available. why make a new format for exposure.?
+
+## MiKe Smith       
+
++ scRNA seq. 
++ mesoderm differentiation in mouse (Scialdone et al Nature 2016)
+
+### scater : package for QC, norm and vis of scRNAseq
+
++ deepTools of scRNA-seq.
++ Integrated with Salmon/Kallisto
++ Auto-QC + diagplots + cell/gene filtering + norm + data str + plots + shiny.
++ with Aaron Lun.
++ Takes advantage of other bioc package (eg scTree from sanger)
++ Diag plot (library complexity)
+
+## Laurent Gatto
+
++ MSnbase2 for mass spec analysis
++ Take metadata out of data and keep spectrum (raw data) away.
++ Do the filtering only when data is asked for (lazy eval).
+
+
+## Witold Wolski
+
++ bibilospec : reading mass spec data
++ c++ program wrapper. can load huge ( 150Mil ) peaks
++ uses SQLite. SQLite outperforms any other ops 
++ R still slow on precessing, with SQLite you are good. Easily integrates into other languages.
+
+##  Anne-Laure Boulesteix: Towards evidence-based computational statistics
+
++ Machine learning people compare prediction errors of 5-10 methods using T-test/Wilcox for benchmarking.
++ Randomized clinical trails : Appropriate sample size to detect diff at power of 80% and p < 0.05 is determined before experiment.
++ Ten Simple Rules for Reducing Overoptimistic Reporting in Methodological Computational Research
+
+### How to do benchmarking stedies (lessons from clinical trials)
+
++ Choose large candidate dataset
++ Make strict inclusion criteria, select all datasets that meet it.
++ Don't drop datasets due to unsatisfying result (avoid selection bias)
++ Handle bugs (methods that don't output any result). Instead of excluding datasets, fix the methods/benchmark.
++ Write a protocol decribing the procedure adopted to benchmark experiment.
++ Double blinding : If our preferred methods give bad results, we look for the problem. But if competing methods produce bad results, we don't.
++ Try to find publication bias : If 10 people tried the method, 2 work, then we see 2 successful publications.
++ Parameter selection is a challange
+
+
+## Raffaele Calogero: PAMR-SC
+
++ Subpopulation classification in single-cell sequencing
++ Deals with zero inflated data
++ Detecting cell hetrogeneity (using SIMLR)
++ Cell clustering, stability estimation based on bootstrap.
++ Detecting the main gene players based on PAM approach (microarray), feature selection based on dispersion.
+
+## Helena Crowell: CATALYST package
+
++ CyTOF (cytometry by Time of Flight)
++ spectral overlap vs spilover on flow cytometry (double positive cells appear due to spillover).
++ R implementation for SCD algorithm using pop speciifc cutoff.
++ Spillover = linear and can be modelled to remove
++ shiny app coming
+
+## Niko Beerenwinkel: Modeling cancer evolution from genomic data
+
++ cancer is an evolutionary process, snapshot at the end is a mix of amplified mutations.
++ we take and sample and draw phylo tree.
++ mutation order matters.
++ Simulations : Driver mutations come up and go down, plus there are additional mutations (modelled by power law)
++ Simulation shows that Exome/Targeted seq doesn't reach enough depth to find all drivers.
+
+### SCITE : A method to reconstruct the phylogenetic tree (Genome Bio)
+
++ Use single cell DNA-seq of tumor pop.
++ No interested in attachment of sample
++ get marginal likelihood + prior (from seq) --> MCMC --> create tree
++ infinite site assumption (each mutation occurs only once). 
++ This assumption can be tested using another baysien model. N > 100 cells produce good estimates (less type-II error).
++ Many violations found (two cells counted as one by microscope), most cells were false positives.
++ To fix for these "Doublets", made a mixture model (marginalization with doublets).
++ Tested with first simulation data (lower FP found), then with three experiment data.
++ Hou et. al 2012, PNAS paper. Found many back mutations.
+
++ Conclusion: Doublets are strong confounding factor.. Infinite site evidence is frequently violated.
+
+
+# Day 2
+
+## BGeeDB package
+
+### Andrea
+
++ get experiment data from BGeeDb, similar to GEO query, but gives more info.
++ Gives only healthy samples.
++ Have getData(), getAnnotation() etc. function
++ Also GSEA included.
++ Best to compare between species (fly, fish, human, mouse)
++ Vince/Martin : ExperimentHub already provide multiple similar resources with a restricted vocabulary.
+
+### Julien roux
+
++ Charaterizing gene lists.
++ One can ask : is there a tissue enriched for my gene list?
++ developed a test for that : **TopAnat test**
++ Tissue ontology terms (Oberon ontology) structured like GO.
++ Extended TopGO class to accomodate anatomical terms.
++ Specify species %>% load data (bgee) %>% create a TopAnat object %>% run TopGo.
+
+
+## Michal Okoniewski: Connecting to genomic data in Parquet using SparkR
+
++ Installing R for jupyter on cluster was a pain.
++ Parquet using SparkR works nice but not the best on benchmark.
++ Benchmark study in review.
+
+## Johannes Rainer: Extending ensembldb: MySQL backend and protein annotations
+
++ MySQL based annotation backend
++ Filters like dplyr, GRanges/Dataframe returned
++ Protein domain annotations, connects to pbase package and makes pRanges objects.
++ Can map the peptide data back to genome
++ AnnotationDBI support, nice ENSEMBL to UCSC conversion.
++ Slides on github @jotsetung.
+
+## Parham Solaimani: Supporting Bioconductor packages in Renjin
+
++ [Renjin](http://www.renjin.org/) is R interpretor written in Java.
++ Can integrate R packages in Java environment.
++ Use case : R on cloud platform as a service : reflection.io
++ Another : Renjin with SPARK.
++ Compatibility : support for S4 and Rcpp
++ Dev environment : benchmarks, testr, dashboard with stats for each build.
++ 2.5 Mil code in R and 3.5 in C and C++.
++ For loops are expensive, for loops are converted to Single Statement Assignment (SSA) in Renjin. Very fast.
++ Compiler function changes the statements in R, but not in Renjin.
+
+## Vince Carey
+
++ MultiassayExperiment a library to create bioc class for multiple experiments in one.
++ API() gives the help
++ load all kind of data (RNAseq, QTL, methylation etc) --> build using experiment data + phenodata.
++ Can get data as Rds files from Amazon S3 cloud (TCGA) and create this.
++ Better scalable (HDF support).
+
+
+## Martin Morgan
+
+### ExperimentHub Package demo.
++ Single sq bracket uses Endomorphism. Double sq bracket gives what's inside.
++ Bioconductor has basic functions (eg. Query) in biocGenerics package. But Hadley's functions (like dplyr::query) have their own implementations, so they mask each other.
++ `display(hub)` gives you a shiny output.
+
+### Organism.dplyr demo
+
+```{r, eval = FALSE}
+library(Organism.dplyr)
+src = src_organism("TxDb.Hsapiens.UCSC.hg38.knownGene")
+```
+
++ you can do DESeq, convert to a `tibble` an do a `left_join` to the ensembl gene IDs
+
++ You can convert tibble back to GRanges (below)
+
+```{r, eval=FALSE}
+tbl(src, "ranges_gene") %>% collect(Inf) %>% GRanges
+```
+
++ get a specific gene out
+
+```{r, eval=FALSE}
+genes(src, filter = list(symbol = "BRCA1") )
+```
+
++ Biomart also gives you DF most of the time.
++ Mike Smith currently took dev of biomart, so can contact him.
++ But ensembl is replacing biomart in a few years. New R API will come in a few years.
+
+### Devtools
+
++ DESCRIPTION : `Author@R`
++ Try to not introduce branches in the main code function. Add switch statement, define functions later that get executed.
++ Why write unit tests when u have examples? : You don't want to show 100 ways your test fails in the examples.
++ `match.arg()` checks if the input has only one of the possible args.
++ `param` tag in roxygen : write the `type` that your function takes.
++ `return` tag in roxygen : write the type of object that your function returns.
++ Added `biocStyle` generates Vingettes on the flow.. --> push to Github
+
+**BioC moving to GIT?**
+
+The problem is in Git user has full ownership of data, but sometimes it's easier to fix many tools at one from the bioc headquarters, which Git doesn't allow. But there is a move towards git.
+
++ version bumps are done automatically from the bioc side, since the dependencies change.
+
+## Developers discussion
+
++ BioC Support forum could be improved.
+
++ Vince shows that a multiassayExperiment object can be loaded in 30 sec, which is 190 mb and has data from 9 different experiment.
+
++ I discussed with vince about using MultiAssayExperiment for HiC/RNAseq/ChIPseq data.
+
++ Exerimenting with the way data is stored and accessed (HDF5/ random access).
+
++ Package Videos : Add a video to your package with the #video tag, will land on the main page of bioc.
+
