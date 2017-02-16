@@ -1,0 +1,4 @@
+
+# Collection of useful dataviz tutorials I found with R, on the internet
+
++ learning [ggplot2](http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html), a workshop from harward.
