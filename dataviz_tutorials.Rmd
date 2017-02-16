@@ -1,4 +1,4 @@
 
 # Collection of useful R dataviz tutorials from on the internet
 
-+ learning [ggplot2](http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html), a workshop from harward.
++ [learning ggplot2](http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html) : a workshop from harward.
