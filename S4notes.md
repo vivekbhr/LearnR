@@ -15,3 +15,9 @@ This tutorial is also old (from 2003) and therefore uses deprecated functions.
 
 4. Bioconductor guide to [implementing S4 class](https://www.bioconductor.org/developers/package-guidelines/#classes). It's
 not a tutorial, just a small set of recommendations for S4 implementation.
+
+5. [A not so short intro to OOP](https://cran.r-project.org/doc/contrib/Genolini-S4tutorialV0-5en.pdf). Especially section 6.3 (constructor function) 
+
+6. [OOP tutorial](http://www.cyclismo.org/tutorial/R/s4Classes.html) at cyclismo.org.
+
+7. [Software development in R](https://www.coursera.org/specializations/r#courses) is a data science specialization program on coursera.
